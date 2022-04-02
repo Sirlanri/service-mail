@@ -6,10 +6,12 @@ import (
 )
 
 func main() {
+
 	app := iris.New()
 	app.OnErrorCode(iris.StatusNotFound, server.NotFound)
 	mail := app.Party("/mail").AllowMethods(iris.MethodOptions)
 	{
-		mail.Post("/send")
+		mail.Post("/send", server.SendHandler)
 	}
+	app.Run(iris.Addr(":" + server.ConfInfo.Port))
 }
