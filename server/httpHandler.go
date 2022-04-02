@@ -22,12 +22,8 @@ func SendHandler(con iris.Context) {
 		con.StatusCode(iris.StatusForbidden)
 		return
 	}
-	err = Sendmail(res.Addr, res.Topic, res.Content)
-	if err != nil {
-		fmt.Println("发送失败！", err.Error())
-		con.StatusCode(iris.StatusForbidden)
-		return
-	}
+	go Sendmail(res.Addr, res.Topic, res.Content)
+
 }
 
 //使用http接收的post请求
